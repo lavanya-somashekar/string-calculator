@@ -1,19 +1,22 @@
 class StringCalculator
   def add(numbers)
-    return 0 if numbers == ""
+    return 0 if numbers.empty?
+
     delimiter = /,|\n/
-    str = numbers
     if numbers.start_with?("//")
-      parts = numbers.split("\n", 2)
-      custom = parts[0][2..-1]
-      delimiter = Regexp.escape(custom)
-      str = parts[1]
+      custom, numbers = numbers.split("\n", 2)
+      delimiter = Regexp.new(Regexp.escape(custom[2..]))
     end
-    nums = str.split(/#{delimiter}|\n/).map(&:to_i)
-    negatives = nums.select { |n| n < 0 }
-    if negatives.any?
-      raise "negative numbers not allowed #{negatives.join(',')}"
-    end
+
+    nums = numbers.split(delimiter).map(&:to_i)
+    check_negatives!(nums)
     nums.sum
+  end
+
+  private
+
+  def check_negatives!(nums)
+    negatives = nums.select { |n| n < 0 }
+    raise "negative numbers not allowed #{negatives.join(',')}" if negatives.any?
   end
 end
