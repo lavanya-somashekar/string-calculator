@@ -12,5 +12,10 @@ describe StringCalculator do
       expect(calc.add('1')).to eq(1)
       expect(calc.add('42')).to eq(42)
     end
+
+    it 'returns the sum for two numbers separated by comma' do
+      expect(calc.add('1,5')).to eq(6)
+      expect(calc.add('10,20')).to eq(30)
+    end
   end
 end
