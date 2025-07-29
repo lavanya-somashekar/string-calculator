@@ -1,7 +1,15 @@
 class StringCalculator
   def add(numbers)
     return 0 if numbers == ""
-    nums = numbers.split(/,|\n/).map(&:to_i)
+    delimiter = /,|\n/
+    str = numbers
+    if numbers.start_with?("//")
+      parts = numbers.split("\n", 2)
+      custom = parts[0][2..-1]
+      delimiter = Regexp.escape(custom)
+      str = parts[1]
+    end
+    nums = str.split(/#{delimiter}|\n/).map(&:to_i)
     nums.sum
   end
 end
