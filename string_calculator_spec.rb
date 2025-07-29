@@ -22,5 +22,10 @@ describe StringCalculator do
       expect(calc.add('1,2,3,4')).to eq(10)
       expect(calc.add('10,20,30')).to eq(60)
     end
+
+    it 'handles new lines between numbers' do
+      expect(calc.add("1\n2,3")).to eq(6)
+      expect(calc.add("4,5\n6")).to eq(15)
+    end
   end
 end
